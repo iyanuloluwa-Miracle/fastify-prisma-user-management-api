@@ -12,3 +12,22 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+model Auth {
+  id Int @id @default(autoincrement())
+  email String @unique
+  name String?
+  password String
+  users User[]
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  email String @unique
+  First_Name String?
+  Last_Name String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  phoneNumber String?
+  owner Auth @relation(fields: [ownerId], references: [id])
+  ownerId Int
+}
